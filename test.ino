@@ -5,35 +5,44 @@
 int width;
 
 // 背もたれからの距離
-int dist_up;
-int dist_dw;
+int dist_hi;
+int dist_lo;
 int dist_ri;
 int dist_le;
 
 // 背中の角度
-double deg_up;
+double deg_hi;
 
 // 腰の角度
-double deg_dw;
+double deg_lo;
 
 // 初期状態での背もたれからの距離
-int orig_dist_up;
-int orig_dist_dw;
+int orig_dist_hi;
+int orig_dist_lo;
 int orig_dist_ri;
 int orig_dist_le;
 int orig_width;
 
+// モータの現在位置を把握
+int loca_ri;
+int laca_le;
 
 // 設定用の定数の宣言
-// 1cmセンサを動かすのに必要なモータの回転角度
-const int DEGREE_TO_1CM = 180;
+// スタートフラグ
+int stared = 0;
+
+// 1cm動かすのに必要な回転速度(仮)
+const int ROTATE = 110;
 
 // 人が座っているかどうか判断するための距離(mm)を表す定数
 const int NO_SEATED_DIST = 500;
 
+// 移動距離限界
+const int limit = 100;
+
 // センサのピンの設定
-const int ECHO_UP = 2;
-const int TRIG_UP = 3;
+const int ECHO_HI = 2;
+const int TRIG_HI = 3;
 const int ECHO_RI = 4;
 const int TRIG_RI = 5;
 const int ECHO_LE = 6;
@@ -44,38 +53,41 @@ const int SRVO_RI = 8;
 const int SRVO_LE = 9;
 
 //サーボモータの設定
-Servo servo_right;
-Servo servo_left;
+Servo servo_ri;
+Servo servo_le;
 
 void setup() {
   // シリアル通信の開始
   Serial.begin(9600);
 
   // 超音波測距センサのピンを入力に設定
-  pinMode(ECHO_UP, INPUT);
+  pinMode(ECHO_HI, INPUT);
   pinMode(ECHO_RI, INPUT);
   pinMode(ECHO_LE, INPUT);
 
   // 超音波測距センサのピンを出力に設定
-  pinMode(TRIG_UP, OUTPUT);
+  pinMode(TRIG_HI, OUTPUT);
   pinMode(TRIG_RI, OUTPUT);
   pinMode(TRIG_LE, OUTPUT);
 
   // サーボモータをピンに割り当て
-  servo_right.attach(SRVO_RI);
-  servo_left.attach(SRVO_LE);
+  servo_ri.attach(SRVO_RI);
+  servo_le.attach(SRVO_LE);
 
   //
 }
 
 void loop() {
-  // 新しいデータを取得する
-  //格納したデータはそのまま取り扱うので、グローバル変数として宣言する
-  getData(); 
-  
   // 参考用のよい姿勢をとったときのデータを取得する
   init();
 
+  // init内でスタートフラグが変更されない限り、以降の動作は行わない
+  if (started == 0) continue;
+  
+  // 新しいデータを取得する
+  // データを格納する変数は、現在の所グローバルであるが、変更する可能性あり
+  getData(); 
+  
   // 取得したデータを変換する
   processData();
 

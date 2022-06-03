@@ -1,25 +1,34 @@
-int moveSensor(String side, int servo_moved) {
+int moveSensor(String side, int moved_count) 
+{
     if (side == "ri") {
         int ECHO = ECHO_RI;
         int TRIG = TRIG_RI;
-        int servo = servo_right;
+        int servo = servo_ri;
     } else if (side == "le") {
         int ECHO = ECHO_LE;
         int TRIG = TRIG_LE;
-        int servo = servo_left;
+        int servo = servo_le;
     }
 
-    // モータが先に動いている時、その分だけ移動して終わる
-    if (servo_moved > 0) {
-        int servo_tmp = servo.read();
-        servo.write(servo_tmp + servo_moved);
+    int count = 0;
+
+    // 他のモータが先に動いている時、その分だけ移動して終わる
+    // 左右のモータで回転方向逆なので符号反転してpartial_moveに渡す
+    if (moved_count > 0) {
+        for (int i = 0; i < moved_count; i++) {
+            // 先に動かした方の処理の実行時間次第で、delayを入れる
+            // delay(10);
+            partial_move(servo, -ROTATE);
+        }
         return 0;
     }
 
-    int servo_pre = servo.read();
     float duration = 0;
     float distance = 0;
     while (true) {
+        // 連続回転サーボでは動作変える必要あり。だるい
+        // とりあえず回転→停止の１セットをカウントして、
+        // 逆のモータをその分回す。
 
         dititalWrite(TRIG, LOW);
         delayMicroseconds(2);
@@ -29,12 +38,12 @@ int moveSensor(String side, int servo_moved) {
         duration = pulseIn(ECHO, HIGH);
         distance = duration / 2 * 340.0 / 1000;
 
-        int pre = servo.read();
-        if (distance > NO_SEATED_DIST) {
-            servo.write(pre + DEGREE_TO_1CM);
+        if (distance >= NO_SEATED_DIST) {
+            partial_move(servo, ROTATE);
+            count++;
             continue;
         }
         break;
     }
-    return servo.read() - servo_pre;
+    return count;
 }
