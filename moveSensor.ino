@@ -24,7 +24,7 @@ int moveSensor(String side, int moved_count)
     }
 
     while (count < MOVE_LIMIT) {
-        // 体までの距離を求め、それが基準値以上だったら座ってない判定
+        // 体までの距離を求め、それが基準値以上だったら位置を替える
         if (getDist(TRIG, ECHO) >= NO_SEATED_DIST) {
             partial_move(servo, ROTATE);
             count++;
