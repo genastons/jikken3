@@ -4,7 +4,7 @@ int getDist(int trig, int echo) {
 
     // 連続回転サーボでは動作変える必要あり。だるい
     // とりあえず回転→停止の１セットをカウントして、
-    // 逆のモータをその分回す。
+    // 逆側のモータをその分回す。
     dititalWrite(trig, LOW);
     delayMicroseconds(2);
     digitalWrite(trig, HIGH);

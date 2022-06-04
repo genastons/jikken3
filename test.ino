@@ -1,6 +1,7 @@
 #include <servo.h>
 #include <math.h>
 // データ格納用の変数の宣言
+// 適宜スコープを変更する
 // 背もたれからの距離
 int dist_hi;
 int dist_lo;

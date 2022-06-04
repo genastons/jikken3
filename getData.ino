@@ -1,6 +1,5 @@
 void getData() {
     // モータがどれだけ動いたか取得する
-
     moved = moveSensor("ri", 0);
 
     if (moved > 0) {
