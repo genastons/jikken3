@@ -1,9 +1,6 @@
 #include <servo.h>
 #include <math.h>
 // データ格納用の変数の宣言
-// 腰幅格納用
-int width;
-
 // 背もたれからの距離
 int dist_hi;
 int dist_lo;
@@ -19,9 +16,12 @@ double deg_lo;
 // 初期状態での背もたれからの距離
 int orig_dist_hi;
 int orig_dist_lo;
-int orig_dist_ri;
-int orig_dist_le;
-int orig_width;
+
+// 腰幅格納用
+int width;
+
+// 腰がどれだけ左右に動いたか
+int moved;
 
 // モータの現在位置を把握
 int loca_ri;
@@ -37,8 +37,8 @@ const int ROTATE = 110;
 // 人が座っているかどうか判断するための距離(mm)を表す定数
 const int NO_SEATED_DIST = 500;
 
-// 移動距離限界
-const int limit = 100;
+// 移動距離限界を10cmとし、カウントで表す
+const int MOVE_LIMIT = 100;
 
 // センサのピンの設定
 const int ECHO_HI = 2;
@@ -95,7 +95,7 @@ void loop() {
   determinePosture();
 
   // Processingにデータを渡す
-  toProcessing();
+  passToProcessing();
 
   // データを保存する
   saveData();

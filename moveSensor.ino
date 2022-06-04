@@ -23,22 +23,9 @@ int moveSensor(String side, int moved_count)
         return 0;
     }
 
-    float duration = 0;
-    float distance = 0;
-    while (true) {
-        // 連続回転サーボでは動作変える必要あり。だるい
-        // とりあえず回転→停止の１セットをカウントして、
-        // 逆のモータをその分回す。
-
-        dititalWrite(TRIG, LOW);
-        delayMicroseconds(2);
-        digitalWrite(TRIG, HIGH);
-        delayMicroseconds(20);
-        digitalWrite(TRIG, LOW);
-        duration = pulseIn(ECHO, HIGH);
-        distance = duration / 2 * 340.0 / 1000;
-
-        if (distance >= NO_SEATED_DIST) {
+    while (count < MOVE_LIMIT) {
+        // 体までの距離を求め、それが基準値以上だったら座ってない判定
+        if (getDist(TRIG, ECHO) >= NO_SEATED_DIST) {
             partial_move(servo, ROTATE);
             count++;
             continue;
