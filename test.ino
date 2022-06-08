@@ -30,7 +30,7 @@ int laca_le;
 
 // 設定用の定数の宣言
 // スタートフラグ
-int stared = 0;
+int started = 0;
 
 // 1cm動かすのに必要な回転速度(仮)
 const int ROTATE = 110;
@@ -56,6 +56,11 @@ const int SRVO_LE = 9;
 //サーボモータの設定
 Servo servo_ri;
 Servo servo_le;
+
+// Processingに引き渡すメッセージ
+enum messages {
+  NO_SEATED,
+}
 
 void setup() {
   // シリアル通信の開始
