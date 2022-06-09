@@ -94,15 +94,6 @@ void loop() {
   // データを格納する変数は、現在の所グローバルであるが、変更する可能性あり
   getData(); 
   
-  // 取得したデータを変換する
-  processData();
-
-  // 変換したデータから姿勢を決定する
-  determinePosture();
-
   // Processingにデータを渡す
-  passToProcessing();
-
-  // データを保存する
-  saveData();
+  Serial.Write({deg_hi, deg_lo, width}, 3);
 }

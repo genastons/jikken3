@@ -3,7 +3,6 @@ void init() {
     getData();
     if ((dist_hi > NO_SEATED_DIST) && (dist_lo > NO_SEATED_DIST)) {
         passToProcessing(NO_SEATED, NO_SEATED, NO_SEATED);
-        continue;
     } else {
         delay(100);
         orig_dist_hi = dist_hi;

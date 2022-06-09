@@ -16,6 +16,7 @@ void getData() {
     dist_hi = getDist(TRIG_HI, ECHO_HI);
     dist_lo = (getDist(TRIG_RI, ECHO_RI) + getDist(TRIG_LE, ECHO_LE)) / 2;
 
+    // 体の角度を算出
     deg_hi = atan(sqrt(pow(dist_lo - dist_hi), 2) + pow(__DIST_FROM_HIGH_TO_LOW, 2));
     deg_lo = atan(sqrt(pow(dist_lo - orig_dis_lo), 2) + pow(__HEIGHT_FROM_DOWNSIDE_TO_LOWERSENSOR,2));
 
