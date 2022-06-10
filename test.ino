@@ -1,7 +1,11 @@
-#include <servo.h>
+#include <Servo.h>
 #include <math.h>
 // データ格納用の変数の宣言
 // 適宜スコープを変更する
+
+// スタートフラグ
+int started = 0;
+
 // 背もたれからの距離
 int dist_hi;
 int dist_lo;
@@ -9,11 +13,13 @@ int dist_ri;
 int dist_le;
 
 // 背中の角度
-double deg_hi;
+int8_t deg_hi;
 
 // 腰の角度
-double deg_lo;
+int8_t deg_lo;
 
+// 体の左右の傾き
+int8_t deg_si;
 // 初期状態での背もたれからの距離
 int orig_dist_hi;
 int orig_dist_lo;
@@ -29,11 +35,11 @@ int loca_ri;
 int laca_le;
 
 // 設定用の定数の宣言
-// スタートフラグ
-int started = 0;
-
 // 1cm動かすのに必要な回転速度(仮)
-const int ROTATE = 110;
+const int ROTATE = 95;
+
+// 体が捻られているか判断する用の定数(mm)
+const int TWIST = 50;
 
 // 人が座っているかどうか判断するための距離(mm)を表す定数
 const int NO_SEATED_DIST = 500;
@@ -58,8 +64,11 @@ Servo servo_ri;
 Servo servo_le;
 
 // Processingに引き渡すメッセージ
-enum messages {
-  NO_SEATED,
+enum status {
+  NO_SEATED, // 座ってないよ
+  TWISTED, // 体捻ってるよ
+  BAD_POSTURE, // 姿勢悪いよ
+  NO_PROBLEM, // 異常無し
 }
 
 void setup() {
@@ -84,6 +93,9 @@ void setup() {
 }
 
 void loop() {
+  // 姿勢の状態を表す、デフォルトでは問題ないとするが後で変更する
+  enum status st = NO_PROBLEM;
+
   // 参考用のよい姿勢をとったときのデータを取得する
   init();
 
@@ -94,6 +106,12 @@ void loop() {
   // データを格納する変数は、現在の所グローバルであるが、変更する可能性あり
   getData(); 
   
+  // 姿勢判定を行う
+  determinePosture();
+
   // Processingにデータを渡す
-  Serial.Write({deg_hi, deg_lo, width}, 3);
+  // シリアル通信開始用のヘッダ
+  // atanの返り値が180以上となることがないことを利用
+  Serial.write(255);
+  Serial.Write({st, deg_hi, deg_lo, deg_si}, 4);
 }
