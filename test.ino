@@ -20,6 +20,7 @@ int8_t deg_lo;
 
 // 体の左右の傾き
 int8_t deg_si;
+
 // 初期状態での背もたれからの距離
 int orig_dist_hi;
 int orig_dist_lo;
