@@ -5,7 +5,7 @@ import processing.serial.*;
 Serial port;
 
 void setup() {
-  size(1000, 1000);
+  size(600, 600); // 文字出力が100*600、姿勢表示がそれぞれ500*300
   port = new Serial(this, "COM3", 9600);
   port.clear();
 }

@@ -67,8 +67,10 @@ Servo servo_le;
 // Processingに引き渡すメッセージ
 enum status {
   NO_SEATED, // 座ってないよ
-  TWISTED, // 体捻ってるよ
-  BAD_POSTURE, // 姿勢悪いよ
+  TOO_LEAN_FORWARD,
+  TOO_LEAN_BACKWARD,
+  TOO_LEAN_FORRIGHT,
+  TOO_LEAN_FORLEFT,
   NO_PROBLEM, // 異常無し
 }
 
