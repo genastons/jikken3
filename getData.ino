@@ -13,9 +13,10 @@ void getData() {
         }
     }
 
-    dist_hi = getDist(TRIG_HI, ECHO_HI);
-    dist_ri = getDist(TRIG_RI, ECHO_RI);
-    dist_le = getDist(TRIG_LE, ECHO_LE);
+    // 取得した距離から、背もたれとセンサ間の距離分差し引き補正する
+    dist_hi = getDist(TRIG_HI, ECHO_HI) - 40;
+    dist_ri = getDist(TRIG_RI, ECHO_RI) - 20;
+    dist_le = getDist(TRIG_LE, ECHO_LE) - 20;
     dist_lo = (dist_ri + dist_le) / 2;
 
     // 体の角度を算出

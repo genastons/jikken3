@@ -67,6 +67,7 @@ Servo servo_le;
 // Processingに引き渡すメッセージ
 enum status {
   NO_SEATED, // 座ってないよ
+  INITIALIZING, // 初期化処理中
   TOO_LEAN_FORWARD,
   TOO_LEAN_BACKWARD,
   TOO_LEAN_FORRIGHT,
@@ -115,6 +116,5 @@ void loop() {
   // Processingにデータを渡す
   // シリアル通信開始用のヘッダ
   // atanの返り値が180以上となることがないことを利用
-  Serial.write(255);
   Serial.Write({st, deg_hi, deg_lo, deg_si}, 4);
 }
