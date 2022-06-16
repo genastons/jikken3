@@ -1,13 +1,16 @@
 int moveSensor(String side, int moved_count) 
 {
+    Servo servo;
+    int TRIG;
+    int ECHO;
     if (side == "ri") {
-        int ECHO = ECHO_RI;
-        int TRIG = TRIG_RI;
-        int servo = servo_ri;
+        ECHO = ECHO_RI;
+        TRIG = TRIG_RI;
+        servo.attach(SRVO_RI);
     } else if (side == "le") {
-        int ECHO = ECHO_LE;
-        int TRIG = TRIG_LE;
-        int servo = servo_le;
+        ECHO = ECHO_LE;
+        TRIG = TRIG_LE;
+        servo.attach(SRVO_LE);
     }
 
     int count = 0;

@@ -21,8 +21,8 @@ void getData() {
 
     // 体の角度を算出
     // 送信の簡略化のためintへ変換するが、小数点以下もほしいので2倍にしてから変換
-    deg_hi = (int8_t)(atan(sqrt(pow(dist_lo - dist_hi), 2) + pow(__DIST_FROM_HIGH_TO_LOW, 2)) * 2);
-    deg_lo = (int8_t)(atan(sqrt(pow(dist_lo - orig_dis_lo), 2) + pow(__HEIGHT_FROM_DOWNSIDE_TO_LOWERSENSOR,2)) * 2);
-    deg_si = (int8_t)(atan(sqrt(pow(moved * ROTATE), 2) + pow(__HEIGHT_FROM_DOWNSIDE_TO_LOWERSENSOR,2)) * 2);
+    deg_hi = (int8_t)(atan(sqrt(pow(dist_lo - dist_hi, 2) + pow(DIST_FROM_HIGH_TO_LOW, 2)) * 2));
+    deg_lo = (int8_t)(atan(sqrt(pow(dist_lo - orig_dist_lo, 2) + pow(HEIGHT_FROM_DOWNSIDE_TO_LOWERSENSOR,2)) * 2));
+    deg_si = (int8_t)(atan(sqrt(pow(moved * ROTATE, 2) + pow(HEIGHT_FROM_DOWNSIDE_TO_LOWERSENSOR,2)) * 2));
     return 0;
 }

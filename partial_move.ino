@@ -1,4 +1,4 @@
-void partial_move(int servo, rotate)
+void partial_move(Servo servo, int rotate)
 {
     delay(15);
     servo.write(rotate);

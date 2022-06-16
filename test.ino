@@ -35,6 +35,8 @@ int moved;
 int loca_ri;
 int laca_le;
 
+int st;
+
 // 設定用の定数の宣言
 // 1cm動かすのに必要な回転速度(仮)
 const int ROTATE = 95;
@@ -47,6 +49,9 @@ const int NO_SEATED_DIST = 500;
 
 // 移動距離限界を10cmとし、カウントで表す
 const int MOVE_LIMIT = 100;
+
+const int DIST_FROM_HIGH_TO_LOW = 530;
+const int HEIGHT_FROM_DOWNSIDE_TO_LOWERSENSOR = 300;
 
 // センサのピンの設定
 const int ECHO_HI = 2;
@@ -73,7 +78,7 @@ enum status {
   TOO_LEAN_FORRIGHT,
   TOO_LEAN_FORLEFT,
   NO_PROBLEM, // 異常無し
-}
+};
 
 void setup() {
   // シリアル通信の開始
@@ -98,23 +103,25 @@ void setup() {
 
 void loop() {
   // 姿勢の状態を表す、デフォルトでは問題ないとするが後で変更する
-  enum status st = NO_PROBLEM;
+  st = status::NO_PROBLEM;
 
   // 参考用のよい姿勢をとったときのデータを取得する
   init();
 
   // init内でスタートフラグが変更されない限り、以降の動作は行わない
-  if (started == 0) continue;
+  if (started == 0) {
   
-  // 新しいデータを取得する
-  // データを格納する変数は、現在の所グローバルであるが、変更する可能性あり
-  getData(); 
+    // 新しいデータを取得する
+    // データを格納する変数は、現在の所グローバルであるが、変更する可能性あり
+    getData(); 
   
-  // 姿勢判定を行う
-  determinePosture();
+    // 姿勢判定を行う
+    determinePosture();
 
-  // Processingにデータを渡す
-  // シリアル通信開始用のヘッダ
-  // atanの返り値が180以上となることがないことを利用
-  Serial.Write({st, deg_hi, deg_lo, deg_si}, 4);
+    // Processingにデータを渡す
+    // シリアル通信開始用のヘッダ
+    // atanの返り値が180以上となることがないことを利用
+    byte data[] = {st, deg_hi, deg_lo, deg_si};
+    Serial.write(data, 4);
+  }
 }
