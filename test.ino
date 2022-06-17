@@ -44,6 +44,36 @@ enum status {
   NO_PROBLEM, // 異常無し
 };
 
+// データ格納用の変数の宣言
+
+// スタートフラグ
+int started = 0;
+
+// 背もたれからの距離
+int dist_hi;
+int dist_lo;
+int dist_ri;
+int dist_le;
+
+// 背中の角度
+int8_t deg_hi;
+
+// 腰の角度
+int8_t deg_lo;
+
+// 体の左右の傾き
+int8_t deg_si;
+
+// 初期状態での背もたれからの距離
+int orig_dist;
+
+// 腰がどれだけ左右に動いたかのカウント
+int moved;
+
+// Processingへ渡すステータス格納用変数
+// 姿勢の状態を表す、デフォルトでは問題ないとするが後で変更する
+int st = status::NO_PROBLEM;
+
 void setup() {
   // シリアル通信の開始
   Serial.begin(9600);
@@ -66,38 +96,6 @@ void setup() {
 }
 
 void loop() {
-  // データ格納用の変数の宣言
-  // 適宜スコープを変更する
-  
-  // スタートフラグ
-  int started = 0;
-  
-  // 背もたれからの距離
-  int dist_hi;
-  int dist_lo;
-  int dist_ri;
-  int dist_le;
-  
-  // 背中の角度
-  int8_t deg_hi;
-  
-  // 腰の角度
-  int8_t deg_lo;
-  
-  // 体の左右の傾き
-  int8_t deg_si;
-  
-  // 初期状態での背もたれからの距離
-  int orig_dist;
-  
-  // 腰がどれだけ左右に動いたかのカウント
-  int moved;
-  
-  // Processingへ渡すステータス格納用変数
-  // 姿勢の状態を表す、デフォルトでは問題ないとするが後で変更する
-  int st = status::NO_PROBLEM;
-
-  
   // 実行開始
   // 参考用のよい姿勢をとったときのデータを取得する
   getInit();

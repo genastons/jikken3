@@ -1,4 +1,4 @@
-void getData(int *moved, int *dist_hi, int *dist_ri, int *dist_le, int *dist_lo) {
+void getData() {
     // モータがどれだけ動いたか取得する
     moved = moveSensor("ri", 0);
 
