@@ -4,6 +4,14 @@ import processing.serial.*;
 
 Serial port;
 
+String status[7] = {"座ってください",
+                    "背筋を伸ばしてください",
+                    "前に傾きすぎです",
+                    "後ろに傾きすぎです",
+                    "右に傾きすぎです",
+                    "左に傾きすぎです",
+                    ""}
+
 void setup() {
   size(600, 600); // 文字出力が100*600、姿勢表示がそれぞれ500*300
   port = new Serial(this, "COM3", 9600);
@@ -22,12 +30,19 @@ void draw() {
     
     if (c == 255) {
         st = port.read();
+
+        text(status[st], 0, 0);
+
+        if ((st == 0) || (st == 1)) {
+          continue;
+        }
+
         deg_hi = port.read();
         deg_lo = port.read();
         deg_si = port.read();
 
+        // 描写開始
      }
   }
-  // 描写を行っていく
 
 }

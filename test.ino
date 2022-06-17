@@ -72,7 +72,7 @@ int moved;
 
 // Processingへ渡すステータス格納用変数
 // 姿勢の状態を表す、デフォルトでは問題ないとするが後で変更する
-int st = status::NO_PROBLEM;
+int st;
 
 void setup() {
   // シリアル通信の開始
@@ -96,6 +96,7 @@ void setup() {
 }
 
 void loop() {
+  st = status::NO_PROBLEM;
   // 実行開始
   // 参考用のよい姿勢をとったときのデータを取得する
   getInit();
