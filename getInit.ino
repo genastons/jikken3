@@ -8,7 +8,8 @@ void getInit() {
     } else {
         delay(100);
         getData();
-        orig_dist = dist_lo;
+        orig_dist_hi = dist_hi;
+        orig_dist_lo = dist_lo;
         started = 1;
     }
 

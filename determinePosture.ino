@@ -9,5 +9,4 @@ void determinePosture(void)
     } else if (deg_si > M_PI/36) {
         st = status::TOO_LEAN_FORLEFT;
     }
-    return 0;
 }

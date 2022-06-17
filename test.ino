@@ -1,41 +1,5 @@
 #include <Servo.h>
 #include <math.h>
-// データ格納用の変数の宣言
-// 適宜スコープを変更する
-
-// スタートフラグ
-int started = 0;
-
-// 背もたれからの距離
-int dist_hi;
-int dist_lo;
-int dist_ri;
-int dist_le;
-
-// 背中の角度
-int8_t deg_hi;
-
-// 腰の角度
-int8_t deg_lo;
-
-// 体の左右の傾き
-int8_t deg_si;
-
-// 初期状態での背もたれからの距離
-int orig_dist_hi;
-int orig_dist_lo;
-
-// 腰幅格納用
-int width;
-
-// 腰がどれだけ左右に動いたか
-int moved;
-
-// モータの現在位置を把握
-int loca_ri;
-int laca_le;
-
-int st;
 
 // 設定用の定数の宣言
 // 1cm動かすのに必要な回転速度(仮)
@@ -102,11 +66,41 @@ void setup() {
 }
 
 void loop() {
+  // データ格納用の変数の宣言
+  // 適宜スコープを変更する
+  
+  // スタートフラグ
+  int started = 0;
+  
+  // 背もたれからの距離
+  int dist_hi;
+  int dist_lo;
+  int dist_ri;
+  int dist_le;
+  
+  // 背中の角度
+  int8_t deg_hi;
+  
+  // 腰の角度
+  int8_t deg_lo;
+  
+  // 体の左右の傾き
+  int8_t deg_si;
+  
+  // 初期状態での背もたれからの距離
+  int orig_dist;
+  
+  // 腰がどれだけ左右に動いたかのカウント
+  int moved;
+  
+  // Processingへ渡すステータス格納用変数
   // 姿勢の状態を表す、デフォルトでは問題ないとするが後で変更する
-  st = status::NO_PROBLEM;
+  int st = status::NO_PROBLEM;
 
+  
+  // 実行開始
   // 参考用のよい姿勢をとったときのデータを取得する
-  init();
+  getInit();
 
   // init内でスタートフラグが変更されない限り、以降の動作は行わない
   if (started == 0) {

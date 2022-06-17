@@ -4,5 +4,4 @@ void partial_move(Servo servo, int rotate)
     servo.write(rotate);
     delay(10);
     servo.write(90);
-    return 0;
 }
