@@ -4,6 +4,8 @@ void determinePosture(void)
         st = status::TOO_LEAN_FORWARD;
     } else if (deg_hi < 0) {
         st = status::TOO_LEAN_BACKWARD;
+    } else if (deg_lo > M_PI/36) {
+        st = status::TOO_LEAN_PELVIS;
     } else if (deg_si < -M_PI/36) {
         st = status::TOO_LEAN_FORRIGHT;
     } else if (deg_si > M_PI/36) {

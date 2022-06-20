@@ -39,6 +39,7 @@ enum status {
   INITIALIZING, // 初期化処理中
   TOO_LEAN_FORWARD,
   TOO_LEAN_BACKWARD,
+  TOO_LEAN_PELVIS,
   TOO_LEAN_FORRIGHT,
   TOO_LEAN_FORLEFT,
   NO_PROBLEM, // 異常無し
@@ -114,7 +115,7 @@ void loop() {
     // Processingにデータを渡す
     // シリアル通信開始用のヘッダ
     // atanの返り値が180以上となることがないことを利用
-    byte data[] = {st, deg_hi, deg_lo, deg_si};
+    byte data[] = {st, deg_hi, deg_si, (int8_t)(dist_hi/10), (int8_t)(dist_lo/10)};
     Serial.write(data, 4);
   }
 }
