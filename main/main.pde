@@ -27,6 +27,7 @@ void draw() {
   int deg_si;
   int dist_hi;
   int dist_lo;
+  int orig_dist;
   if (port.available() > 0) {
     c = port.read();
     
@@ -36,13 +37,24 @@ void draw() {
         deg_si = port.read();
         dist_hi = port.read();
         dist_lo = port.read();
+        orig_dist = port.read();
         text(status[st], 0, 0);
 
         if ((st == 0) || (st == 1)) {
           return;
         }
 
+        int x1 = 250 - dist_hi/3;
+        int y1 = 250;
+        int x2 = 250 - orig_dist/3;
+        int y2 = 400;
+        int dx = 250 - dist_lo/3;
+        int dy = 331;
         // 描写開始
+        float t = dx * (x1 + x2 -2 * dx)/(x1 * x2 - dx * dx);
+        stroke(255,9,9);
+        strokeWeight(2);
+        bezier(x1, y1, t*dx, t*dy, t*dx, t*dy, x2, y2);
      }
   }
 

@@ -115,7 +115,7 @@ void loop() {
     // Processingにデータを渡す
     // シリアル通信開始用のヘッダ
     // atanの返り値が180以上となることがないことを利用
-    byte data[] = {st, deg_hi, deg_si, (int8_t)(dist_hi/10), (int8_t)(dist_lo/10)};
-    Serial.write(data, 4);
+    byte data[] = {st, deg_hi, deg_si, (int8_t)(dist_hi/10), (int8_t)(dist_lo/10), (int8_t)(orig_dist/10)};
+    Serial.write(data, 5);
   }
 }
