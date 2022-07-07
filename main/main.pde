@@ -44,17 +44,29 @@ void draw() {
           return;
         }
 
-        int x1 = 250 - dist_hi/3;
-        int y1 = 250;
-        int x2 = 250 - orig_dist/3;
+        int x1 = 250 - dist_hi*3;
+        int y1 = 241;
+        int x2 = 250 - orig_dist*3;
         int y2 = 400;
-        int dx = 250 - dist_lo/3;
+        int dx = 250 - dist_lo*3;
         int dy = 331;
+        int radius = 36;
         // 描写開始
+        // 人間
         float t = dx * (x1 + x2 -2 * dx)/(x1 * x2 - dx * dx);
         stroke(255,9,9);
         strokeWeight(2);
         bezier(x1, y1, t*dx, t*dy, t*dx, t*dy, x2, y2);
+        line(100 - orig_dist, 400, 250 - orig_dist, 400);
+        line(100 - orig_dist, 400, 100 - orig_dist, 550);
+        line(250 - 39 * sin(deg_hi), 250 - 39 * cos(deg_hi), x1, y1);
+        circle(250 - (39 + radius) * sin(deg_hi), 250 - (39 + radius) * cos(deg_hi), radius);
+
+        // 椅子
+        line(253, 243, 253, 403);
+        line(133, 403, 253, 403);
+        line(133, 403, 133, 550);
+        line(253, 243, 253, 550);
      }
   }
 
